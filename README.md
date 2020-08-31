@@ -25,9 +25,12 @@ climate:
     host: xxx.xxx.xxx.xxx
     token: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 ```
+```
 
+可選屬性:scan_interval: x
+每x秒更新一次
 
-
+```
 
 
 ## 功能服務
@@ -40,7 +43,7 @@ climate:
 
 ### climate服務  `set_fan_mode`
 
-### climate服務  `turn_on`    
-    預設為乾燥模式
+### climate服務  `turn_on (預設為乾燥模式)`    
+
 ### climate服務  `turn_off`
 
