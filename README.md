@@ -40,7 +40,7 @@ climate:
 
 ### climate服務  `set_fan_mode`
 
-### climate服務  `turn_on`
-
+### climate服務  `turn_on`    
+    預設為乾燥模式
 ### climate服務  `turn_off`
 
