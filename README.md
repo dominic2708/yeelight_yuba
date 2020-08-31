@@ -33,6 +33,7 @@ climate:
 ```
 
 
+
 ## 功能服務
 
 ### light服務  `turn_on`
@@ -47,3 +48,9 @@ climate:
 
 ### climate服務  `turn_off`
 
+
+
+```
+```
+所有插件都經參考syssi，修改而來。特別感謝https://github.com/syssi
+```
