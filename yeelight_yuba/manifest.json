@@ -1,6 +1,7 @@
 {
   "domain": "yeelight_yuba",
   "name": "Ynuyi Windows",
+  "version": "1.0",
   "documentation": [],
   "dependencies": [],
   "codeowners": [],
