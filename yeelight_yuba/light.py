@@ -155,7 +155,7 @@ class YunyiLight(LightEntity):
         if ystate1 == "on":
             return True
         else:
-            return None
+            return False
 
     async def _try_command(self, mask_error, func, *args, **kwargs):
         """Call a device command handling error messages."""
