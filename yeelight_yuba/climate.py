@@ -1,6 +1,5 @@
 import enum
 import logging
-import asyncio
 from functools import partial
 from datetime import timedelta
 import voluptuous as vol
@@ -64,8 +63,7 @@ SUCCESS = ['ok']
 
 SCAN_INTERVAL = timedelta(seconds=15)
 
-@asyncio.coroutine
-def async_setup_platform(hass, config, async_add_devices, discovery_info=None):
+async def async_setup_platform(hass, config, async_add_devices, discovery_info=None):
     """Set up the sensor from config."""
     from miio import Device, DeviceException
     if DATA_KEY not in hass.data:
@@ -260,11 +258,10 @@ class YeelightYuba(ClimateEntity):
             _LOGGER.error(mask_error, exc)
             return False
 
-    @asyncio.coroutine
-    def async_set_hvac_mode(self, hvac_mode):
+    async def async_set_hvac_mode(self, hvac_mode):
         """Set new target hvac mode."""
         if hvac_mode == "off":
-            result = yield from self._try_command(
+            result = await self._try_command(
                 "Turning the miio device off failed.", self._device.send,
                 'set_bh_mode', 'bh_off')
             if result:
@@ -279,14 +276,13 @@ class YeelightYuba(ClimateEntity):
                 ymode = "drying"
             elif hvac_mode == "fan_only":
                 ymode = "coolwind"
-            result = yield from self._try_command(
+            result = await self._try_command(
                 "Turning the miio device on failed.", self._device.send,
                 'set_bh_mode', [ymode])
             if result:
             	  self._state = hvac_mode
 
-    @asyncio.coroutine
-    def async_set_fan_mode(self, fan_mode):
+    async def async_set_fan_mode(self, fan_mode):
     	  if self._state == "heat":
     	  	  if fan_mode == "low":
     	  	  	  y_fan_mode = 0
@@ -328,20 +324,18 @@ class YeelightYuba(ClimateEntity):
     	  else:
     	  	  y_fan_mode = 8
     	  if y_fan_mode != 8:
-            result = yield from self._try_command(
+            result = await self._try_command(
                 "Turning the miio device off failed.", self._device.send,
                 'set_gears_idx', [y_fan_mode])
 
-    @asyncio.coroutine
-    def async_turn_off(self, **kwargs) -> None:
+    async def async_turn_off(self, **kwargs) -> None:
         """Turn the miio device off."""
-        result = yield from self._try_command("Turning the miio device off failed.", self._device.send,'set_bh_mode', 'bh_off')
+        result = await self._try_command("Turning the miio device off failed.", self._device.send,'set_bh_mode', 'bh_off')
         if result:
             self._state = False
 
-    @asyncio.coroutine
-    def async_turn_on(self, **kwargs) -> None:
+    async def async_turn_on(self, **kwargs) -> None:
         """Turn the miio device on."""
-        result = yield from self._try_command("Turning the miio device on failed.", self._device.send,'set_bh_mode', 'drying')
+        result = await self._try_command("Turning the miio device on failed.", self._device.send,'set_bh_mode', 'drying')
         if result:
             self._state = True
