@@ -1,4 +1,3 @@
-import asyncio
 from functools import partial
 import logging
 import voluptuous as vol
@@ -39,8 +38,8 @@ SUCCESS = ['ok']
 SUPPORT_FLAGS = SUPPORT_BRIGHTNESS 
 SCAN_INTERVAL = timedelta(seconds=15)
 
-@asyncio.coroutine
-def async_setup_platform(hass, config, async_add_devices, discovery_info=None):
+
+async def async_setup_platform(hass, config, async_add_devices, discovery_info=None):
     """Set up the sensor from config."""
     from miio import Device, DeviceException
     if DATA_KEY not in hass.data:
@@ -171,16 +170,16 @@ class YunyiLight(LightEntity):
             _LOGGER.error(mask_error, exc)
             return False
 
-    @asyncio.coroutine
-    def async_turn_off(self, **kwargs) -> None:
+
+    async def async_turn_off(self, **kwargs) -> None:
         """Turn the miio device off."""
-        result = yield from self._try_command("Turning the miio device off failed.", self._device.send,'set_power', 'off')
+        result = await self._try_command("Turning the miio device off failed.", self._device.send,'set_power', 'off')
         if result:
             self._state = False
 
-    @asyncio.coroutine
-    def async_turn_on(self, **kwargs) -> None:
+
+    async def async_turn_on(self, **kwargs) -> None:
         """Turn the miio device on."""
-        result = yield from self._try_command("Turning the miio device on failed.", self._device.send,'set_power', 'on')
+        result = await self._try_command("Turning the miio device on failed.", self._device.send,'set_power', 'on')
         if result:
             self._state = True
